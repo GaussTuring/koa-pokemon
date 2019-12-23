@@ -33,7 +33,7 @@ module.exports = router => {
      */
     router.post('/user/register', async ctx => {
         const user = ctx.request.body
-        const findRes = User.findOne(user.username)
+        const findRes = User.findOne({ username: user.username })
         if (findRes) {
             ctx.body = result.error('Username already exists')
             return
