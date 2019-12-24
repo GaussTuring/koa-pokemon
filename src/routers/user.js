@@ -10,20 +10,25 @@ module.exports = router => {
      * 登录
      */
     router.post('/user/login', async (ctx) => {
-        const user = ctx.request.body
-        if (user.username == '' || user.password == '') {
+        const { username, password } = ctx.request.body
+        if (username == '' || password == '') {
             return
         }
-        let findRes = await User.findOne({ username: user.username })
-        if (findRes) {
+        let findRes = await User.findOne({ username })
+        if (!findRes) {
             ctx.body = result.error('User does not exist')
             return
         }
-        if (findRes.passoword !== util.MD5(user.password)) {
+        if (findRes.password !== util.MD5(password.trim())) {
             ctx.body = result.error('Password error')
             return
         }
-        const payload = user
+
+        const payload = {
+            id: findRes._id,
+            username,
+            password
+        }
         const token = util.generateToken(payload)
         ctx.body = result.success({ token })
     })
@@ -33,7 +38,7 @@ module.exports = router => {
      */
     router.post('/user/register', async ctx => {
         const user = ctx.request.body
-        const findRes = User.findOne({ username: user.username })
+        const findRes = await User.findOne({ username: user.username })
         if (findRes) {
             ctx.body = result.error('Username already exists')
             return
@@ -44,6 +49,15 @@ module.exports = router => {
         })
         await newUser.save()
         ctx.body = result.success()
+    })
+    /**
+     * 返回当前用户信息
+     */
+    router.get('/user/getUserInfo', async ctx => {
+        const { token } = ctx.request.body
+        const user = util.getJWTPayload(token)
+        const userinfo = await User.findOne({ _id: user.id })
+        ctx.body = result.success(userinfo)
     })
 }
 

@@ -11,6 +11,11 @@ exports.generateToken = (payload = {}) => {
     })
 }
 
+exports.getJWTPayload = token => {
+    // return jwt.verify(token.split(" ")[1], config.security.secretKey)
+    return jwt.verify(token, config.security.secretKey)
+}
+
 /**
  * md5加密
  */

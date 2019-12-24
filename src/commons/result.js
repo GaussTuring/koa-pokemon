@@ -17,5 +17,12 @@ module.exports = {
             data,
             message
         }
+    },
+    loginErr: (data = '', message = 'Not logged in') => {
+        return {
+            code: 3,
+            data,
+            message
+        }
     }
 }
