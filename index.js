@@ -2,6 +2,7 @@ const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
 const mongoose = require('mongoose')
 const koajwt = require('koa-jwt')
+const cors = require('koa2-cors')
 const router = require('./src/routers/index')
 const config = require('./src/config/config')
 
@@ -11,6 +12,7 @@ const app = new Koa()
 
 
 app.use(bodyParser())
+app.use(cors())
 
 app.use((ctx, next) => {
     return next().catch(err => {
