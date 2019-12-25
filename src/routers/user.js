@@ -54,7 +54,7 @@ module.exports = router => {
      * 返回当前用户信息
      */
     router.get('/user/getUserInfo', async ctx => {
-        const { token } = ctx.request.body
+        const { token } = ctx.query
         const user = util.getJWTPayload(token)
         const userinfo = await User.findOne({ _id: user.id })
         ctx.body = result.success(userinfo)

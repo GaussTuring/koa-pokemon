@@ -2,7 +2,6 @@ const Koa = require('koa')
 const bodyParser = require('koa-bodyparser')
 const mongoose = require('mongoose')
 const koajwt = require('koa-jwt')
-const cors = require('koa2-cors')
 const router = require('./src/routers/index')
 const config = require('./src/config/config')
 
@@ -10,12 +9,6 @@ const result = require('./src/commons/result')
 
 const app = new Koa()
 
-app.use(cors({
-    origin: "*",
-    maxAge: 5,
-    allowMethods: ['GET', 'POST'],
-    allowHeaders:['Content-Type', 'Authorization', 'Accept']
-}))
 
 app.use(bodyParser())
 
