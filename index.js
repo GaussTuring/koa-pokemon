@@ -10,9 +10,15 @@ const result = require('./src/commons/result')
 
 const app = new Koa()
 
+app.use(cors({
+    origin: "*",
+    maxAge: 5,
+    allowMethods: ['GET', 'POST'],
+    allowHeaders:['Content-Type', 'Authorization', 'Accept']
+}))
 
 app.use(bodyParser())
-app.use(cors())
+
 
 app.use((ctx, next) => {
     return next().catch(err => {
