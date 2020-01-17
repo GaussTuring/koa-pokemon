@@ -11,17 +11,17 @@ module.exports = {
             message
         }
     },
-    error: (data = '', message = 'failure') => {
+    error: (message = 'failure') => {
         return {
             code: 2,
-            data,
+            data: '',
             message
         }
     },
-    loginErr: (data = '', message = 'Not logged in') => {
+    loginErr: (message = 'Not logged in') => {
         return {
             code: 3,
-            data,
+            data: '',
             message
         }
     }
